@@ -18,31 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const icon = mobileToggle.querySelector('i');
         if (navLinks.classList.contains('active')) {
             icon.classList.replace('fa-bars', 'fa-times');
-            navLinks.style.display = 'flex';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '100%';
-            navLinks.style.left = '0';
-            navLinks.style.width = '100%';
-            navLinks.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-            navLinks.style.backdropFilter = 'blur(10px)';
-            navLinks.style.padding = '30px 20px';
-            navLinks.style.boxShadow = '0 15px 30px rgba(0,0,0,0.1)';
-            
-            const links = navLinks.querySelectorAll('a');
-            links.forEach(link => {
-                link.style.color = '#1F1F1F';
-                link.style.padding = '10px 0';
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    icon.classList.replace('fa-times', 'fa-bars');
-                    navLinks.style.display = 'none';
-                });
-            });
         } else {
             icon.classList.replace('fa-times', 'fa-bars');
-            navLinks.style.display = 'none';
         }
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            mobileToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+        });
     });
 
     // Smooth Scrolling
