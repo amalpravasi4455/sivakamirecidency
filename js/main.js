@@ -1,3 +1,65 @@
+// ========== LOADING PAGE ANIMATION ==========
+window.addEventListener('load', () => {
+    const loaderWrapper = document.querySelector('.loader-wrapper');
+    if (loaderWrapper) {
+        setTimeout(() => {
+            loaderWrapper.classList.add('hidden');
+        }, 800);
+    }
+});
+
+// ========== MOUSE POINTER ANIMATION ==========
+const cursorDot = document.querySelector('.cursor-dot');
+
+let mouseX = 0, mouseY = 0;
+let dotX = 0, dotY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (cursorDot) {
+        cursorDot.style.left = mouseX - 4 + 'px';
+        cursorDot.style.top = mouseY - 4 + 'px';
+    }
+
+    // Create trail effect randomly
+    if (Math.random() > 0.8) {
+        createTrail(mouseX, mouseY);
+    }
+});
+
+function createTrail(x, y) {
+    const trail = document.createElement('div');
+    trail.className = 'cursor-dot-trail';
+    trail.style.left = x - 2 + 'px';
+    trail.style.top = y - 2 + 'px';
+    document.body.appendChild(trail);
+
+    setTimeout(() => trail.remove(), 800);
+}
+
+document.addEventListener('mouseenter', () => {
+    if (cursorDot) cursorDot.style.display = 'block';
+});
+
+document.addEventListener('mouseleave', () => {
+    if (cursorDot) cursorDot.style.display = 'none';
+});
+
+// Detect hover on interactive elements
+document.addEventListener('mouseover', (e) => {
+    if (cursorDot && (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('.btn'))) {
+        cursorDot.classList.add('active');
+    }
+});
+
+document.addEventListener('mouseout', (e) => {
+    if (cursorDot && (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('.btn'))) {
+        cursorDot.classList.remove('active');
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     const mobileToggle = document.getElementById('mobile-toggle');
