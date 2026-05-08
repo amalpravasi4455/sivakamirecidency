@@ -252,11 +252,13 @@ nav.scrolled .mobile-toggle {
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../assets/images/living_room.webp');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed; /* Parallax effect */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: var(--white);
+    overflow: hidden;
 }
 
 .hero-content h1 {
@@ -287,6 +289,15 @@ nav.scrolled .mobile-toggle {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.hero-content {
+    animation: float 6s ease-in-out infinite;
 }
 
 /* Section Common */
@@ -729,6 +740,7 @@ footer {
 }
 
 /* ========== MOUSE POINTER ANIMATION ========== */
+/* ========== MOUSE POINTER ANIMATION ========== */
 .cursor-dot {
     position: fixed;
     width: 8px;
@@ -770,4 +782,99 @@ footer {
         opacity: 0;
         transform: scale(0.5) translate(0, 20px);
     }
+}
+
+/* ========== ADVANCED REVEAL ANIMATIONS ========== */
+.reveal {
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.reveal-up {
+    transform: translateY(40px);
+}
+
+.reveal-down {
+    transform: translateY(-40px);
+}
+
+.reveal-left {
+    transform: translateX(-40px);
+}
+
+.reveal-right {
+    transform: translateX(40px);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Staggered delay for child elements */
+.stagger-container .reveal {
+    transition-delay: calc(var(--delay) * 0.1s);
+}
+
+/* Section Title Animation */
+.section-title h2 {
+    position: relative;
+    display: inline-block;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transform: translateX(-50%);
+    transition: width 0.8s ease-out 0.5s;
+}
+
+.section-title.active h2::after {
+    width: 80px;
+}
+
+/* Image Reveal Effect */
+.reveal-img-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.reveal-img-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.reveal-img-container.active::after {
+    transform: scaleX(1);
+    transform-origin: right;
+    animation: revealImg 0.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+@keyframes revealImg {
+    0% { transform: scaleX(0); transform-origin: left; }
+    50% { transform: scaleX(1); transform-origin: left; }
+    51% { transform: scaleX(1); transform-origin: right; }
+    100% { transform: scaleX(0); transform-origin: right; }
+}
+
+.reveal-img-container img {
+    opacity: 0;
+    transition: opacity 0.1s 0.3s;
+}
+
+.reveal-img-container.active img {
+    opacity: 1;
 }

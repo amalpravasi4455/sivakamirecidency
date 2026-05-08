@@ -115,24 +115,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reveal on Scroll
     const observerOptions = {
-        threshold: 0.1
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('active');
+                // If it's a staggered container, handle children
+                if (entry.target.classList.contains('stagger-container')) {
+                    const children = entry.target.querySelectorAll('.reveal');
+                    children.forEach((child, index) => {
+                        child.style.setProperty('--delay', index + 1);
+                        child.classList.add('active');
+                    });
+                }
             }
         });
     }, observerOptions);
 
-    document.querySelectorAll('section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'all 0.8s ease-out';
-        observer.observe(section);
-    });
+    // Observe all elements with reveal or reveal-img-container classes
+    const revealElements = document.querySelectorAll('.reveal, .reveal-img-container, .section-title, .stagger-container');
+    revealElements.forEach(el => observer.observe(el));
 
     // Simple Lightbox
     const galleryItems = document.querySelectorAll('.gallery-item');
