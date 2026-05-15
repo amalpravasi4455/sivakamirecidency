@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
 
+# AI Crawler Optimization
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://sivakamiresidency.com/sitemap.xml
